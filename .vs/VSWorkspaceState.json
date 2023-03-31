@@ -1,14 +1,12 @@
 {
   "ExpandedNodes": [
     "",
+    "\\app_api",
+    "\\app_api\\controllers",
+    "\\app_api\\database",
     "\\app_server",
-    "\\app_server\\controllers",
-    "\\app_server\\database",
-    "\\app_server\\database\\models",
-    "\\app_server\\routes",
-    "\\app_server\\views",
-    "\\app_server\\views\\partials",
-    "\\data"
+    "\\app_server\\views"
   ],
+  "SelectedNode": "\\app_api\\database\\db.js",
   "PreviewInSolutionExplorer": false
 }

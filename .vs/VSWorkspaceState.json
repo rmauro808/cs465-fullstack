@@ -4,9 +4,7 @@
     "\\app_api",
     "\\app_api\\controllers",
     "\\app_api\\database",
-    "\\app_server",
-    "\\app_server\\views"
+    "\\app_server"
   ],
-  "SelectedNode": "\\app_api\\database\\db.js",
   "PreviewInSolutionExplorer": false
 }

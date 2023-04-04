@@ -3,7 +3,6 @@ const host = process.env.DB_HOST || '127.0.0.1'
 const dbURI = `mongodb://${host}/travlr`;
 const readLine = require('readline');
 
-
 const connect = () => {
     mongoose.connect(dbURI, {
         useNewUrlParser: true,
@@ -19,7 +18,8 @@ mongoose.connection.on('connected', () => {
 
 mongoose.connection.on('error', err => {
 
-    console.log('Mongoose connection error:', err);
+    console.log('Mongoose connection error:' + err);
+    return connect();
 });
 
 mongoose.connection.on('disconnected', () => {
@@ -69,5 +69,7 @@ process.on('SIGTERM', () => {
         process.exit(0);
     });
 });
+
+connect();
 
 require("./models/travlr");

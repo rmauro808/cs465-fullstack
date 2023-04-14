@@ -4,9 +4,7 @@
 
     <div class="form-group">
       <label>Code:</label>
-      <input type="text" formControlName="code"
-             placeholder="Code" class="form-control"
-             [ngClass]="{ 'is-invalid': submitted && f.code.errors }">
+      <input type="text" formControlName="code" placeholder="Code" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.code.errors }">
       <div *ngIf="submitted && f.code.errors">
         <div *ngIf="f.code.errors.required">
           Trip Code is required

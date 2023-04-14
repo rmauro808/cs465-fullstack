@@ -48,7 +48,7 @@ const tripsFindByCode = async (req, res) => {
 const tripsAddTrip = async (req, res) => {
     getUser(req, res,
         (req, res) => {
-            Trip
+            model
                 .create({
                     code: req.body.code,
                     name: req.body.name,
@@ -74,10 +74,10 @@ const tripsAddTrip = async (req, res) => {
     );
 }
 
-const tripsUpdateTrip = async (req, res) => {
+const tripUpdateTrip = async (req, res) => {
     getUser(req, res,
         (req, res) => {
-            Trip
+            model
                 .findOneAndUpdate({ 'code': req.params.tripCode }, {
                     code: req.body.code,
                     name: req.body.name,

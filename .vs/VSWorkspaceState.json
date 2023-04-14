@@ -1,8 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\app_server\\views",
-    "\\app_server\\views\\partials"
+    "\\app_admin",
+    "\\app_admin\\src",
+    "\\app_admin\\src\\assets",
+    "\\app_admin\\src\\assets\\images",
+    "\\app_api",
+    "\\app_api\\config",
+    "\\app_api\\controllers",
+    "\\app_api\\routes"
   ],
+  "SelectedNode": "\\app_admin\\src\\assets\\images\\baseball.jpg",
   "PreviewInSolutionExplorer": false
 }

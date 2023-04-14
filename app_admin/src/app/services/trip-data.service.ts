@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
+
 
 import { Trip } from '../models/trip';
 import { AuthResponse } from '../models/authresponse';
@@ -11,7 +12,8 @@ import { User } from '../models/user';
 @Injectable()
 export class TripDataService {
 
-  constructor(private http: Http,
+  constructor(
+    private http: Http,
     @Inject(BROWSER_STORAGE) private storage: Storage
   ) { }
 
@@ -45,14 +47,13 @@ export class TripDataService {
       .catch(this.handleError);
   }
 
-  public updateTrip(trip: Trip): Promise<Trip> {
-    const url = `${this.tripUrl}/${trip._id}`;
-    const headers = new Headers();
-    headers.set('Authorization', `Bearer ${this.storage.getItem('mean-token')}`);
+  updateTrip(trip: Trip, httpOptions?: any): Promise<any> {
+    const url = `${this.tripUrl}/trips/${trip._id}`;
+
     return this.http
-      .put(url, trip, { headers: headers })
+      .put(url, trip, httpOptions) // Add httpOptions parameter to put() method
       .toPromise()
-      .then(response => response.json() as Trip)
+      .then(response => response)
       .catch(this.handleError);
   }
 
@@ -72,9 +73,8 @@ export class TripDataService {
     return this.makeAuthApiCall('register', user);
   }
 
-  private makeAuthApiCall(urlPath: string, user: User):
-    Promise<AuthResponse> {
-    const url: string = `${this.apiBaseUrl}/${urlPath}`;
+  private makeAuthApiCall(urlPath: string, user: User): Promise<AuthResponse> {
+    const url: string = `${this.apiBaseUrl}${urlPath}`;
     return this.http
       .post(url, user)
       .toPromise()

@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { TripDataService } from '../services/trip-data.service';
 import { Trip } from '../models/trip';
+import { AuthenticationService } from '../services/authentication';
+import { BROWSER_STORAGE } from '../storage';
+
 
 
 @Component({
@@ -18,7 +21,9 @@ export class EditTripComponent implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private tripService: TripDataService
+    private tripService: TripDataService,
+    private authService: AuthenticationService,
+    @Inject(BROWSER_STORAGE) private storage: Storage
 
   ) { }
 
@@ -66,7 +71,12 @@ export class EditTripComponent implements OnInit {
     this.submitted = true;
 
     if (this.editForm.valid) {
-      this.tripService.updateTrip(this.editForm.value)
+      const jwt = this.storage.getItem('auth-token'); // Get JWT token from storage
+      const httpOptions = { // Define http options with Authorization header
+        headers: { 'Authorization': `Bearer ${jwt}` }
+      };
+
+      this.tripService.updateTrip(this.editForm.value, httpOptions)
         .then(data => {
           console.log(data);
 

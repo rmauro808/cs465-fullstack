@@ -94,7 +94,7 @@ const tripUpdateTrip = async (req, res) => {
                             .status(404)
                             .send({
                                 message: "Trip not found with code" + req.params.tripCode
- });
+                            });
                     }
                     res.send(trip);
                 }).catch(err => {
@@ -103,7 +103,7 @@ const tripUpdateTrip = async (req, res) => {
                             .status(404)
                             .send({
                                 message: "Trip not found with code " + req.params.tripCode
- });
+                            });
                     }
                     return res
                         .status(500) // server error

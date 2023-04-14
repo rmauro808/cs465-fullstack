@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 
 import { Trip } from '../models/trip';
 import { AuthResponse } from '../models/authresponse';
@@ -45,17 +45,18 @@ export class TripDataService {
       .catch(this.handleError);
   }
 
-  public updateTrip(formData: Trip): Promise<Trip> {
-    console.log('Inside TripDataService#updateTrip');
-    console.log(formData);
+  public updateTrip(trip: Trip): Promise<Trip> {
+    const url = `${this.tripUrl}/${trip._id}`;
+    const headers = new Headers();
+    headers.set('Authorization', `Bearer ${this.storage.getItem('mean-token')}`);
     return this.http
-      .put(this.tripUrl + formData.code, formData)
+      .put(url, trip, { headers: headers })
       .toPromise()
-      .then(response => response.json() as Trip[])
+      .then(response => response.json() as Trip)
       .catch(this.handleError);
   }
 
-  
+
 
 
   private handleError(error: any): Promise<any> {
@@ -71,7 +72,8 @@ export class TripDataService {
     return this.makeAuthApiCall('register', user);
   }
 
-  private makeAuthApiCall(urlPath: string, user: User): Promise<AuthResponse> {
+  private makeAuthApiCall(urlPath: string, user: User):
+    Promise<AuthResponse> {
     const url: string = `${this.apiBaseUrl}/${urlPath}`;
     return this.http
       .post(url, user)

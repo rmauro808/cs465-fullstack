@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication';
 import { User } from '../models/user';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,9 +18,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService
   ) { }
-
   ngOnInit() { }
-
   public onLoginSubmit(): void {
     this.formError = '';
     if (!this.credentials.email || !this.credentials.password) {

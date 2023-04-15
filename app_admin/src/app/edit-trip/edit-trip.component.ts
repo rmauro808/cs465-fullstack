@@ -6,8 +6,6 @@ import { Trip } from '../models/trip';
 import { AuthenticationService } from '../services/authentication';
 import { BROWSER_STORAGE } from '../storage';
 
-
-
 @Component({
   selector: 'app-edit-trip',
   templateUrl: './edit-trip.component.html',
@@ -50,9 +48,7 @@ export class EditTripComponent implements OnInit {
     })
 
     console.log(
-      "EditTripComponent#onInit calling TripDataService#getTrip('" +
-      tripCode +
-      "')"
+      "EditTripComponent#onInit calling TripDataService#getTrip('" + tripCode + "')"
     );
 
     this.tripService.getTrip(tripCode)
@@ -84,6 +80,7 @@ export class EditTripComponent implements OnInit {
         });
     }
   }
+
 
   // get the form short name to access the form fields
   get f() {

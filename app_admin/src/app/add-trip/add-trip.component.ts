@@ -30,7 +30,7 @@ export class AddTripComponent implements OnInit {
       perPerson: ['', Validators.required],
       image: ['', Validators.required],
       description: ['', Validators.required],
-    })
+    });
   }
 
   onSubmit() {
@@ -40,9 +40,13 @@ export class AddTripComponent implements OnInit {
         .then(data => {
           console.log(data);
           this.router.navigate(['']);
+        })
+        .catch(error => {
+          console.error(error);
         });
     }
   }
+
   // get the form short name to access the form fields
   get f() { return this.addForm.controls; }
 }

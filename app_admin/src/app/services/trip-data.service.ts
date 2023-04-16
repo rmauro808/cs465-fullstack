@@ -67,7 +67,7 @@ export class TripDataService {
       })
     };
     return this.http
-      .put(this.tripUrl, formData, httpOptions)
+      .put<Trip>(this.tripUrl + formData.code, formData, httpOptions)
       .toPromise()
       .catch(this.handleError);
   }

@@ -57,27 +57,20 @@ export class TripDataService {
       .catch(this.handleError);
   }
 
-  public updateTrip(trip: Trip, httpOptions): Promise<any> {
-    const url = `${this.tripUrl}/${trip._id}`;
-    console.log('Updating trip:', trip);
-    console.log('HTTP options:', httpOptions);
-    return this.http
-      .put<Trip>(url, trip, httpOptions)
-      .toPromise()
-      .then(data => {
-        console.log('Update successful:', data);
-        return data;
+  public updateTrip(formData: Trip): Promise<Trip> {
+    console.log('Inside TripDataService#addTrip');
+    console.log(formData);
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem('travlr-token')}`
       })
-      .catch(error => {
-        console.log('Update failed:', error);
-        throw error;
-      });
+    };
+    return this.http
+      .put(this.tripUrl, formData, httpOptions)
+      .toPromise()
+      .catch(this.handleError);
   }
-
-
-
-
-
 
 
   private handleError(error: any): Promise<any> {

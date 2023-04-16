@@ -2,9 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { TripDataService } from '../services/trip-data.service';
-import { Trip } from '../models/trip';
-import { AuthenticationService } from '../services/authentication';
-import { BROWSER_STORAGE } from '../storage';
+
 
 
 
@@ -22,8 +20,7 @@ export class EditTripComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private tripService: TripDataService,
-    private authService: AuthenticationService,
-    @Inject(BROWSER_STORAGE) private storage: Storage
+
 
   ) { }
 
@@ -49,47 +46,31 @@ export class EditTripComponent implements OnInit {
       description: ["", Validators.required],
     })
 
-    console.log(
-      "EditTripComponent#onInit calling TripDataService#getTrip('" + tripCode + "')"
-    );
+    console.log("EditTripComponent#onInit calling TripDataService#getTrip('" + tripCode + "')");
 
     this.tripService.getTrip(tripCode)
       .then(data => {
-        // console.log(data);
+        console.log(data);
 
         this.editForm.patchValue(data[0]);
 
-        console.log("patched")
+        
         // using editForm.setValue() will throw a console error
       })
 
   }
 
   onSubmit() {
-    console.log('Submitting form...');
-    console.log('Form data:', this.editForm.value);
     this.submitted = true;
-
     if (this.editForm.valid) {
-      const jwt = this.storage.getItem('travlr-token'); // Get JWT token from storage
-      console.log('JWT token:', jwt);
-
-      const httpOptions = { // Define http options with Authorization header
-        headers: { 'Authorization': `Bearer ${jwt}` }
-      };
-      console.log('HTTP options:', httpOptions);
-
-      this.tripService.updateTrip(this.editForm.value, httpOptions)
+      this.tripService.updateTrip(this.editForm.value)
         .then(data => {
-          console.log('Update successful:', data);
-          console.log('Redirecting to list-trips...');
-          this.router.navigate(['list-trips']);
+          console.log(data);
+          this.router.navigate(['']);
         })
         .catch(error => {
-          console.log('Update failed:', error);
+          console.error(error);
         });
-    } else {
-      console.log('Form is invalid.');
     }
   }
 
@@ -97,7 +78,7 @@ export class EditTripComponent implements OnInit {
 
   // get the form short name to access the form fields
   get f() {
-    return this.editForm.controls;
+     return this.editForm.controls;
   }
 
 }

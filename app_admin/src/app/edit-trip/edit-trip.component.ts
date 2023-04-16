@@ -6,6 +6,8 @@ import { Trip } from '../models/trip';
 import { AuthenticationService } from '../services/authentication';
 import { BROWSER_STORAGE } from '../storage';
 
+
+
 @Component({
   selector: 'app-edit-trip',
   templateUrl: './edit-trip.component.html',
@@ -64,22 +66,33 @@ export class EditTripComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('Submitting form...');
+    console.log('Form data:', this.editForm.value);
     this.submitted = true;
 
     if (this.editForm.valid) {
-      const jwt = this.storage.getItem('auth-token'); // Get JWT token from storage
+      const jwt = this.storage.getItem('travlr-token'); // Get JWT token from storage
+      console.log('JWT token:', jwt);
+
       const httpOptions = { // Define http options with Authorization header
         headers: { 'Authorization': `Bearer ${jwt}` }
       };
+      console.log('HTTP options:', httpOptions);
 
       this.tripService.updateTrip(this.editForm.value, httpOptions)
         .then(data => {
-          console.log(data);
-
+          console.log('Update successful:', data);
+          console.log('Redirecting to list-trips...');
           this.router.navigate(['list-trips']);
+        })
+        .catch(error => {
+          console.log('Update failed:', error);
         });
+    } else {
+      console.log('Form is invalid.');
     }
   }
+
 
 
   // get the form short name to access the form fields

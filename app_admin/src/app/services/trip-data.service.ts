@@ -22,7 +22,7 @@ export class TripDataService {
     console.log('Inside TripDataService#addTrip');
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Bearer ${localStorage.getItem('tripplanner-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('travlr-token')}`
       })
     };
     return this.http
@@ -35,7 +35,7 @@ export class TripDataService {
     console.log('Inside TripDataService#getTrip(tripCode)');
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Bearer ${localStorage.getItem('tripplanner-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('travlr-token')}`
       })
     };
     return this.http
@@ -48,7 +48,7 @@ export class TripDataService {
     console.log('Inside TripDataService#getTrips');
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Bearer ${localStorage.getItem('tripplanner-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('travlr-token')}`
       })
     };
     return this.http
@@ -57,13 +57,28 @@ export class TripDataService {
       .catch(this.handleError);
   }
 
-  updateTrip(trip: Trip, httpOptions): Promise<any> {
+  public updateTrip(trip: Trip, httpOptions): Promise<any> {
     const url = `${this.tripUrl}/${trip._id}`;
-    return this.http.put(url, trip, httpOptions)
+    console.log('Updating trip:', trip);
+    console.log('HTTP options:', httpOptions);
+    return this.http
+      .put<Trip>(url, trip, httpOptions)
       .toPromise()
-      .then(response => response)
-      .catch(this.handleError);
+      .then(data => {
+        console.log('Update successful:', data);
+        return data;
+      })
+      .catch(error => {
+        console.log('Update failed:', error);
+        throw error;
+      });
   }
+
+
+
+
+
+
 
   private handleError(error: any): Promise<any> {
     console.error('Something has gone wrong', error);
